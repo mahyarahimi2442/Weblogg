@@ -12,16 +12,11 @@ public class Post extends BaseEntity {
     private String author;
     private PostStatus status;
     private Number views;
-    private LocalDateTime updatedAt;
     private LocalDateTime publishedAt;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Override
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
 
     public Category getCategory() {
         return category;
@@ -31,10 +26,6 @@ public class Post extends BaseEntity {
         this.category = category;
     }
 
-    @Override
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
     public LocalDateTime getPublishedAt() {
         return publishedAt;

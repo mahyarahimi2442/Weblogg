@@ -1,14 +1,26 @@
 package ir.ac.weblogg.service.Category;
 
-import ir.ac.weblogg.dto.CategoryDto;
+import ir.ac.weblogg.dto.category.CategoryDto;
+import ir.ac.weblogg.dto.category.CategorySaveDto;
 import ir.ac.weblogg.model.Category;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CategoryService {
-   void save(Category category);
-   List<Category> findAll(int id);
-   Category findById(int id);
-   void delete(int id);
 
-}
+
+      CategoryDto save(CategorySaveDto categorySaveDto);
+
+      List<CategoryDto> findAll();
+
+      CategoryDto findById(int id);
+
+      CategoryDto update(int id, CategorySaveDto categorySaveDto);
+
+      void delete(int id);
+
+      Optional<Category> findEntityById(int id); // برای ارتباط با PostService
+   }
+
+

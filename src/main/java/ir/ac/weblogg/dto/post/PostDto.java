@@ -1,12 +1,10 @@
-package ir.ac.weblogg.dto;
-
+package ir.ac.weblogg.dto.post;
 import ir.ac.weblogg.model.Post;
 import ir.ac.weblogg.model.PostStatus;
 
 import java.time.LocalDateTime;
 
 public class PostDto {
-
     private final int id;
     private final String title;
     private final LocalDateTime creationDate;
@@ -16,9 +14,11 @@ public class PostDto {
     private final PostStatus status;
     private final Number views;
     private final LocalDateTime publishedAt;
+    private final String categoryName;
+    private final int categoryId;
 
-    public PostDto(int id, String title, LocalDateTime creationDate, LocalDateTime updatedAt, String content, String author,
-                   PostStatus status, Number views, LocalDateTime publishedAt) {
+    public PostDto(int id, String title, LocalDateTime creationDate, LocalDateTime updatedAt, String content, String author, PostStatus status,
+                   Number views, LocalDateTime publishedAt, String categoryName, int categoryId) {
         this.id = id;
         this.title = title;
         this.creationDate = creationDate;
@@ -28,6 +28,8 @@ public class PostDto {
         this.status = status;
         this.views = views;
         this.publishedAt = publishedAt;
+        this.categoryName = categoryName;
+        this.categoryId = categoryId;
     }
 
     public int getId() {
@@ -66,4 +68,28 @@ public class PostDto {
         return publishedAt;
     }
 
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public static PostDto convertToDto(Post post)
+    {return new PostDto(
+            post.getId(),
+            post.getTitle(),
+            post.getCreatedAt(),
+            post.getUpdatedAt(),
+            post.getContent(),
+            post.getAuthor(),
+            post.getStatus(),
+            post.getViews(),
+            post.getPublishedAt(),
+            post.getCategory().getName(),
+            post.getCategory().getId());
+
+    }
 }
+
