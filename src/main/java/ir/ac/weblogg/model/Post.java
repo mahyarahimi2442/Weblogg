@@ -1,9 +1,8 @@
 package ir.ac.weblogg.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 
 @Table(name = "Post")
 @Entity
@@ -13,6 +12,37 @@ public class Post extends BaseEntity {
     private String author;
     private PostStatus status;
     private Number views;
+    private LocalDateTime updatedAt;
+    private LocalDateTime publishedAt;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @Override
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @Override
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getPublishedAt() {
+        return publishedAt;
+    }
+
+    public void setPublishedAt(LocalDateTime publishedAt) {
+        this.publishedAt = publishedAt;
+    }
 
     public String getTitle() {
         return title;
