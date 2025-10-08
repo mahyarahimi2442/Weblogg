@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وبلاگ من</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: "Vazirmatn", sans-serif;
+            background-color: #f9fbfc;
+            color: #333;
+        }
+
+        /* Header */
+        header {
+            background-color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        header .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #008c99;
+        }
+
+        nav a {
+            text-decoration: none;
+            margin: 0 15px;
+            color: #444;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #00b2b2;
+        }
+
+        /* Search section */
+        .search-section {
+            background: linear-gradient(135deg, #a4f5e9, #b3e5fc);
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .search-section h1 {
+            font-size: 26px;
+            margin-bottom: 15px;
+            color: #005f68;
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search-box input {
+            padding: 10px 15px;
+            width: 280px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .search-box button {
+            background-color: #00bfa6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .search-box button:hover {
+            background-color: #009c89;
+        }
+
+        /* Category buttons */
+        .categories {
+            text-align: center;
+            margin: 30px auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .categories button {
+            border: 2px solid #00bfa6;
+            background-color: transparent;
+            color: #008c99;
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .categories button:hover {
+            background-color: #00bfa6;
+            color: white;
+        }
+
+        /* Blog grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .blog-card {
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-card .content {
+            padding: 15px;
+        }
+
+        .blog-card h3 {
+            margin: 10px 0;
+            color: #007a84;
+            font-size: 18px;
+        }
+
+        .blog-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Featured (big) card */
+        .featured {
+            grid-column: 1 / -1;
+        }
+
+        .featured img {
+            height: 350px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #e0f7f3;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #006d73;
+            margin-top: 40px;
+        }
+
+        /* Responsive */
+        @media (min-width: 700px) {
+            .blog-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .featured {
+                grid-column: span 3;
+            }
+        }
+
+        @media (max-width: 700px) {
+            header {
+                flex-direction: column;
+            }
+            nav {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">MyBlog 🌿</div>
+    <nav>
+        <a href="#">خانه</a>
+        <a href="#">پست‌ها</a>
+        <a href="#">درباره ما</a>
+        <a href="#">تماس</a>
+    </nav>
+</header>
+<section class="search-section">
+    <h1>وبلاگ سرگرم‌کننده ما 🌸</h1>
+    <div class="search-box">
+        <input type="text" placeholder="جستجو در پست‌ها...">
+        <button>جستجو</button>
+    </div>
+</section>
+
+<div class="categories">
+    <button>ورزشی</button>
+    <button>علمی</button>
+    <button>فناوری</button>
+    <button>زندگی</button>
+    <button>مسافرت</button>
+    <button>سلامت</button>
+    <button>موزیک</button>
+    <button>سینما</button>
+</div>
+
+<main class="blog-grid">
+    <div class="blog-card featured">
+        <img src="/van-gogh.jpg" alt="featured">
+        <div class="content">
+            <h3>چطور دوچرخه مناسب انتخاب کنیم؟</h3>
+            <p>راهنمای کامل برای انتخاب بهترین دوچرخه برای فصل بهار در استرالیا. نکاتی برای مبتدیان و حرفه‌ای‌ها.</p>
+        </div>
+    </div>
+
+    <div class="blog-card">
+        <img src="https://source.unsplash.com/random/301x201?travel" alt="">
+        <div class="content">
+            <h3>ماجراجویی در جاده‌ها</h3>
+            <p>تجربه‌ای ناب از سفر با دوچرخه در مسیرهای کوهستانی و ساحلی...</p>
+        </div>
+    </div>
+
+    <div class="blog-card">
+        <img src="https://source.unsplash.com/random/302x202?fitness" alt="">
+        <div class="content">
+            <h3>تمرین‌های صبحگاهی</h3>
+            <p>چطور با چند حرکت ساده روز خود را پرانرژی شروع کنیم.</p>
+        </div>
+    </div>
+
+    <div class="blog-card">
+        <img src="https://source.unsplash.com/random/303x203?technology" alt="">
+        <div class="content">
+            <h3>فناوری‌های جدید دوچرخه</h3>
+            <p>مروری بر جدیدترین نوآوری‌ها در ساخت دوچرخه‌های هوشمند.</p>
+        </div>
+    </div>
+
+    <div class="blog-card">
+        <img src="https://source.unsplash.com/random/304x204?forest" alt="">
+        <div class="content">
+            <h3>طبیعت‌گردی با دوچرخه</h3>
+            <p>سفری آرامش‌بخش در میان جنگل‌ها و مسیرهای طبیعی زیبا.</p>
+        </div>
+    </div>
+
+    <div class="blog-card">
+        <img src="https://source.unsplash.com/random/305x205?city" alt="">
+        <div class="content">
+            <h3>دوچرخه‌سواری شهری</h3>
+            <p>نکاتی برای استفاده از دوچرخه در شهرهای شلوغ و پرترافیک.</p>
+        </div>
+    </div>
+</main>
+
+<footer>
+    © 2025 - طراحی شده با 💚 توسط محیا
+</footer>
+
+</body>
+</html>

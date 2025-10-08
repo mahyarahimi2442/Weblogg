@@ -5,16 +5,14 @@ import jakarta.validation.constraints.NotBlank;
 public class UserDto {
     private final String username;
     private final String password;
-    private final String nationalCode;
-    private final String nationality;
-    private final String name;
+    private final String fullName;
+    private final String email;
 
-    public UserDto(String username, String password, String nationalCode, String nationality, String name) {
+    public UserDto(String username, String password, String fullName, String email) {
         this.username = username;
         this.password = password;
-        this.nationalCode = nationalCode;
-        this.nationality = nationality;
-        this.name = name;
+        this.fullName = fullName;
+        this.email = email;
     }
 
     @NotBlank(message = "user.username.null")
@@ -27,18 +25,14 @@ public class UserDto {
         return password;
     }
 
-    @NotBlank(message = "user.nationalCode.null")
-    public String getNationalCode() {
-        return nationalCode;
+    @NotBlank(message = "user.fullName.null")
+    public String getFullName() {
+        return fullName;
     }
 
-    @NotBlank(message = "user.nationality.null")
-    public String getNationality() {
-        return nationality;
-    }
 
-    @NotBlank(message = "user.name.null")
-    public String getName() {
-        return name;
+    @NotBlank(message = "user.email.null")
+    public String getEmail() {
+        return email;
     }
 }

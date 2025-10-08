@@ -3,23 +3,14 @@ package ir.ac.weblogg.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Category")
-public class Category  {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+@Table(name = "categories")
+public class Category extends BaseEntity {
+
     private String name;
     private String description;
     private String slug;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    public Category() {}
     public String getName() {
         return name;
     }

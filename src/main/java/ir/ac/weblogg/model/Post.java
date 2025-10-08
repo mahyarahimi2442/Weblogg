@@ -4,17 +4,19 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-@Table(name = "Post")
+
 @Entity
+@Table(name = "post")
 public class Post extends BaseEntity {
     private String title;
     private String content;
     private String author;
+    @Enumerated(EnumType.STRING)
     private PostStatus status;
     private Number views;
     private LocalDateTime publishedAt;
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
 
@@ -59,7 +61,7 @@ public class Post extends BaseEntity {
         this.author = author;
     }
 
-    @Enumerated(EnumType.STRING)
+
     public PostStatus getStatus() {
         return status;
     }

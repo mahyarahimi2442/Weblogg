@@ -3,7 +3,7 @@ package ir.ac.weblogg;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "ir.ac.weblogg")
 public class WebloggApplication {
 
     public static void main(String[] args) {

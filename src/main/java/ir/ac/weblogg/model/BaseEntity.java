@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 public class BaseEntity {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime disableDate;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     public int getId() {
         return id;
     }
