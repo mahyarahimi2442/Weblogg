@@ -2,6 +2,7 @@ package ir.ac.weblogg.model;
 
 import jakarta.persistence.*;
 
+import java.awt.*;
 import java.time.LocalDateTime;
 
 
@@ -13,7 +14,6 @@ public class Post extends BaseEntity {
     private String author;
     @Enumerated(EnumType.STRING)
     private PostStatus status;
-    private Number views;
     private LocalDateTime publishedAt;
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
@@ -68,13 +68,5 @@ public class Post extends BaseEntity {
 
     public void setStatus(PostStatus status) {
         this.status = status;
-    }
-
-    public Number getViews() {
-        return views;
-    }
-
-    public void setViews(Number views) {
-        this.views = views;
     }
 }

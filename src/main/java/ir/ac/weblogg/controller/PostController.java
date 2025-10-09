@@ -1,5 +1,6 @@
 package ir.ac.weblogg.controller;
 
+import ir.ac.weblogg.Repasitory.CategoryRepository;
 import ir.ac.weblogg.customExeption.RuleException;
 import ir.ac.weblogg.dto.SaveDto;
 import ir.ac.weblogg.dto.post.PostDto;
@@ -22,17 +23,20 @@ public class PostController {
 
     private final PostService postService;
     private final CategoryService categoryService;
+    private final CategoryRepository categoryRepository;
 
-    public PostController(PostService postService, CategoryService categoryService) {
+    public PostController(PostService postService, CategoryService categoryService, CategoryRepository categoryRepository) {
         this.postService = postService;
         this.categoryService = categoryService;
+        this.categoryRepository = categoryRepository;
     }
 
     // ایجاد پست جدید
     @PostMapping
     public ResponseEntity<SaveDto> save(@Valid @RequestBody PostSaveDto postSaveDto) {
-        Category category = categoryService.findById(postSaveDto.getCategoryId());
-
+        Category category = categoryRepository.findById(postSaveDto.getCategoryId())
+                .orElseThrow(() ->
+                new RuleException("category.not.found"));
         Post post = postSaveDto.convertToPost(category);
         postService.save(post);
         return ResponseEntity.ok(new SaveDto(post.getId()));
@@ -67,7 +71,9 @@ public class PostController {
     @PutMapping("/{id}")
     public ResponseEntity<SaveDto> update(@PathVariable int id,
                                           @Valid @RequestBody PostSaveDto postSaveDto) {
-        Category category = categoryService.findById(postSaveDto.getCategoryId());
+        Category category = categoryRepository.findById(postSaveDto.getCategoryId())
+                .orElseThrow(() ->
+                new RuleException("category.not.found"));
 
 
         Post updatedPost = postSaveDto.convertToPost(category);

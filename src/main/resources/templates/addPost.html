@@ -117,121 +117,133 @@
 
     <div class="card p-4 bg-light">
         <h3 class="text-center mb-4 text-primary fw-bold" id="formTitle">ذخیره پست</h3>
-        <form id="examForm">
+        <form id="postForm">
             <div class="mb-3">
-                <label for="name" class="form-label">عنوان پست</label>
-                <input type="text" class="form-control" id="name" placeholder="عنوان پست را وارد کنید...">
+                <label for="title" class="form-label">عنوان پست</label>
+                <input type="text" class="form-control" id="title" placeholder="عنوان پست را وارد کنید...">
             </div>
 
             <div class="mb-3">
-                <div>
-                    <label for="DRAFT" class="form-label">سخت</label>
-                    <input type="radio" id="DRAFT" value="DRAFT" name="postStatus" checked/>
-                </div>
-                <div>
-                    <label for="PUBLISHED" class="form-label">متوسط</label>
-                    <input type="radio" id="PUBLISHED" value="PUBLISHED" name="postStatus"/>
-                </div>
-
+                <label for="content" class="form-label">محتوا</label>
+                <textarea class="form-control" id="content" rows="5" placeholder="متن پست را بنویسید..."></textarea>
             </div>
 
             <div class="mb-3">
-                <label for="description" class="form-label">توضیحات امتحان</label>
-                <input type="text" class="form-control" id="description" placeholder="توضیحات امتحان را وارد کنید...">
+                <label for="author" class="form-label">نویسنده</label>
+                <input type="text" class="form-control" id="author" placeholder="نام نویسنده را وارد کنید...">
             </div>
 
-            <button type="submit" id="saveBtn" class="btn btn-primary w-100 fw-bold">ذخیره</button>
+            <div class="mb-3">
+                <label class="form-label">وضعیت</label>
+                <select class="form-select" id="status">
+                    <option value="DRAFT">پیش‌نویس</option>
+                    <option value="PUBLISHED">منتشر شده</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="category" class="form-label">دسته‌بندی</label>
+                <select class="form-select" id="category"></select>
+            </div>
+
+            <button type="submit" id="saveBtn"  class="btn btn-primary w-100 fw-bold">ذخیره</button>
         </form>
-    </div>
-</div>
 
+            <script>
+                const params = new URLSearchParams(window.location.search);
+                const postId = params.get("id");
 
-<script>
-    const params = new URLSearchParams(window.location.search);
-    const examId = params.get("id");
+                document.addEventListener("DOMContentLoaded", () => {
+                    // گرفتن کتگوری‌ها از دیتابیس
+                    fetch("http://localhost:8080/categories")
+                        .then(res => res.json())
+                        .then(categories => {
+                            const categorySelect = document.getElementById("category");
+                            categories.forEach(cat => {
+                                const option = document.createElement("option");
+                                option.value = cat.id;
+                                option.textContent = cat.name;
+                                categorySelect.appendChild(option);
+                            });
+                        });
 
-    document.addEventListener("DOMContentLoaded", () => {
-        if (examId) {
-            document.getElementById("formTitle").innerText = "بروزرسانی امتحان";
-            document.getElementById("saveBtn").innerText = "بروزرسانی";
+                    // اگر حالت ویرایش بود:
+                    if (postId) {
+                        document.getElementById("saveBtn").innerText = "بروزرسانی پست";
 
-
-            fetch(`http://localhost:8083/exams/${examId}`)
-                .then(res => res.json())
-                .then(exam => {
-                    document.getElementById("name").value = exam.name;
-                    document.getElementById("description").value = exam.description;
-                    const radio = document.querySelector(`input[name = "level" ][value = "${exam.level}"]`);
-                    if (radio) radio.checked = true;
+                        fetch(`http://localhost:8080/posts/${postId}`)
+                    .then(res => res.json())
+                            .then(post => {
+                                document.getElementById("title").value = post.title;
+                                document.getElementById("content").value = post.content;
+                                document.getElementById("author").value = post.author;
+                                document.getElementById("status").value = post.status;
+                                document.getElementById("category").value = post.categoryId;
+                            });
+                    }
                 });
-        }
-    });
 
-    document.getElementById("examForm").addEventListener("submit", function (e) {
-        e.preventDefault();
-        if (examId) {
-            updateExam(examId);
-        } else {
-            saveExam();
-        }
-    });
+                document.getElementById("saveBtn").addEventListener("click", function (e) {
+                    e.preventDefault();
+                    if (postId) {
+                        updatePost(postId);
+                    } else {
+                        savePost();
+                    }
+                });
 
-    function saveExam() {
-        const name = document.getElementById("name").value;
-        const level = document.querySelector("input[name='level']:checked").value;
-        const description = document.getElementById("description").value;
+                function savePost() {
+                    const title = document.getElementById("title").value;
+                    const content = document.getElementById("content").value;
+                    const author = document.getElementById("author").value;
+                    const status = document.getElementById("status").value;
+                    const categoryId = document.getElementById("category").value;
 
-        fetch("http://localhost:8083/exams", {
-            method: "POST",
-            headers: {"Content-type": "application/json"},
-            body: JSON.stringify({name, level, description})
-        })
-            .then(async res => {
-                if (res.status !== 200) {
-                    const response = await res.json();
-                    showErrorToast(response[0].title)
-                    return;
+                    fetch("http://localhost:8080/posts", {
+                        method: "POST",
+                        headers: {"Content-type": "application/json"},
+                        body: JSON.stringify({title, content, author, status, categoryId})
+                    })
+                        .then(async res => {
+                            if (!res.ok) {
+                                const response = await res.json();
+                                alert(response[0]?.title || "خطا در ثبت پست");
+                                return;
+                            }
+                            return res.json();
+                        })
+                        .then(res => {
+                            if (res) {
+                                window.location.href = "http://localhost:8080/allpost";
+                            }
+                        });
                 }
-                return res.json();
-            })
-            // .then(res => {
-            //     if (res) {
-            //         window.location.href = "http://localhost:8083/showExam";
-            //     }
-            // });
-    }
 
-    function updateExam(id) {
-        const name = document.getElementById("name").value;
-        const level = document.querySelector(`input[name='level']:checked`).value;
-        const description = document.getElementById("description").value;
-
-        fetch(`http://localhost:8083/exams/${id}`, {
-            method: "PUT",
-            headers: {"Content-type": "application/json"},
-            body: JSON.stringify({name, level, description})
-        })
-            .then(async res => {
-                if (!res.ok) {
-                    const response = await res.json();
-                    showErrorToast(response[0]?.title);
-                    return;
+                function updatePost(id) {
+                    const title = document.getElementById("title").value;
+                    const content = document.getElementById("content").value;
+                    const author = document.getElementById("author").value;
+                    const status = document.getElementById("status").value;
+                    const categoryId = document.getElementById("category").value;
+                    fetch(`http://localhost:8080/posts/${id}`, {
+                    method: "PUT",
+                        headers: {"Content-type": "application/json"},
+                    body: JSON.stringify({title, content, author, status, categoryId})
+                })
+                .then(async res => {
+                    if (!res.ok) {
+                        const response = await res.json();
+                        alert(response[0]?.title || "خطا در بروزرسانی پست");
+                        return;
+                    }
+                    return res.json();
+                })
+                    .then(res => {
+                        if (res) {
+                            window.location.href = "http://localhost:8080/";
+                        }
+                    });
                 }
-                return res.json();
-            })
-            .then(res => {
-                if (res) {
-                    window.location.href = "http://localhost:8083/showExam";
-                }
-            });
-    }
-
-    function showErrorToast(message) {
-        document.getElementById("toastMessage").textContent = message;
-        const toastElement = document.getElementById("errorToast");
-        const toast = new bootstrap.Toast(toastElement);
-        toast.show();
-    }
-</script>
-</body>
+            </script>
+  </body>
 </html>

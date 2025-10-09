@@ -36,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category findById(int id) {
+    public CategoryDto findById(int id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new RuleException("category.not.found"));
         return CategoryDto.convertToDto(category);

@@ -23,5 +23,11 @@ public class PageController {
     @GetMapping("/category")
     public String addCategory() {return "addCategory";}
 
+    @GetMapping("/addpost")
+    public String addPost() {return "addPost";}
+
+    @GetMapping("allpost")
+    public String allPost() {return "allPost";}
+
 }
 

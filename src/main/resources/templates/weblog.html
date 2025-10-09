@@ -156,6 +156,23 @@
             color: #666;
             line-height: 1.6;
         }
+        /* جزئیات دکمه */
+        .details-btn {
+            display: inline-block;
+            background-color: #00bfa6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 13px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .details-btn:hover {
+            background-color: #009c89;
+        }
 
         /* Featured (big) card */
         .featured {
@@ -208,6 +225,7 @@
         <a href="#">تماس</a>
     </nav>
 </header>
+
 <section class="search-section">
     <h1>وبلاگ سرگرم‌کننده ما 🌸</h1>
     <div class="search-box">
@@ -227,59 +245,42 @@
     <button>سینما</button>
 </div>
 
-<main class="blog-grid">
-    <div class="blog-card featured">
-        <img src="/van-gogh.jpg" alt="featured">
-        <div class="content">
-            <h3>چطور دوچرخه مناسب انتخاب کنیم؟</h3>
-            <p>راهنمای کامل برای انتخاب بهترین دوچرخه برای فصل بهار در استرالیا. نکاتی برای مبتدیان و حرفه‌ای‌ها.</p>
-        </div>
-    </div>
-
-    <div class="blog-card">
-        <img src="https://source.unsplash.com/random/301x201?travel" alt="">
-        <div class="content">
-            <h3>ماجراجویی در جاده‌ها</h3>
-            <p>تجربه‌ای ناب از سفر با دوچرخه در مسیرهای کوهستانی و ساحلی...</p>
-        </div>
-    </div>
-
-    <div class="blog-card">
-        <img src="https://source.unsplash.com/random/302x202?fitness" alt="">
-        <div class="content">
-            <h3>تمرین‌های صبحگاهی</h3>
-            <p>چطور با چند حرکت ساده روز خود را پرانرژی شروع کنیم.</p>
-        </div>
-    </div>
-
-    <div class="blog-card">
-        <img src="https://source.unsplash.com/random/303x203?technology" alt="">
-        <div class="content">
-            <h3>فناوری‌های جدید دوچرخه</h3>
-            <p>مروری بر جدیدترین نوآوری‌ها در ساخت دوچرخه‌های هوشمند.</p>
-        </div>
-    </div>
-
-    <div class="blog-card">
-        <img src="https://source.unsplash.com/random/304x204?forest" alt="">
-        <div class="content">
-            <h3>طبیعت‌گردی با دوچرخه</h3>
-            <p>سفری آرامش‌بخش در میان جنگل‌ها و مسیرهای طبیعی زیبا.</p>
-        </div>
-    </div>
-
-    <div class="blog-card">
-        <img src="https://source.unsplash.com/random/305x205?city" alt="">
-        <div class="content">
-            <h3>دوچرخه‌سواری شهری</h3>
-            <p>نکاتی برای استفاده از دوچرخه در شهرهای شلوغ و پرترافیک.</p>
-        </div>
-    </div>
+<main class="blog-grid" id="posts-container">
+    <!-- پست‌ها به صورت داینامیک اینجا اضافه می‌شن -->
 </main>
 
 <footer>
     © 2025 - طراحی شده با 💚 توسط محیا
 </footer>
+
+<script>
+    // دریافت پست‌ها از بک‌اند
+    fetch("http://localhost:8080/posts")
+        .then(res => res.json())
+        .then(posts => renderPosts(posts))
+        ;
+
+    function renderPosts(posts) {
+        const container = document.getElementById("posts-container");
+        container.innerHTML = "";
+
+        posts.forEach((post) => {
+            const card = document.createElement("div");
+            card.className = "blog-card";
+
+            card.innerHTML =
+               `
+                    <div class="content">
+                        <h3>${post.title}</h3>
+                        <p>${post.content }...</p>
+                        <a href="http://localhost:8080/postDetails?id=${post.id}" class="details-btn">مشاهده جزئیات</a>
+                    </div>`
+                    ;
+
+                    container.appendChild(card);
+                    });
+                    }
+</script>
 
 </body>
 </html>

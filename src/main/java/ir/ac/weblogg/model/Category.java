@@ -3,7 +3,7 @@ package ir.ac.weblogg.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "category")
 public class Category extends BaseEntity {
 
     private String name;

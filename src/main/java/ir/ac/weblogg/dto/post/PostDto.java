@@ -12,13 +12,12 @@ public class PostDto {
     private final String content;
     private final String author;
     private final PostStatus status;
-    private final Number views;
     private final LocalDateTime publishedAt;
     private final String categoryName;
     private final int categoryId;
 
-    public PostDto(int id, String title, LocalDateTime creationDate, LocalDateTime updatedAt, String content, String author, PostStatus status,
-                   Number views, LocalDateTime publishedAt, String categoryName, int categoryId) {
+    public PostDto(int id, String title, LocalDateTime creationDate, LocalDateTime updatedAt, String content, String author, PostStatus status
+                   , LocalDateTime publishedAt, String categoryName, int categoryId) {
         this.id = id;
         this.title = title;
         this.creationDate = creationDate;
@@ -26,7 +25,6 @@ public class PostDto {
         this.content = content;
         this.author = author;
         this.status = status;
-        this.views = views;
         this.publishedAt = publishedAt;
         this.categoryName = categoryName;
         this.categoryId = categoryId;
@@ -60,9 +58,6 @@ public class PostDto {
         return status;
     }
 
-    public Number getViews() {
-        return views;
-    }
 
     public LocalDateTime getPublishedAt() {
         return publishedAt;
@@ -85,7 +80,6 @@ public class PostDto {
             post.getContent(),
             post.getAuthor(),
             post.getStatus(),
-            post.getViews(),
             post.getPublishedAt(),
             post.getCategory().getName(),
             post.getCategory().getId());
