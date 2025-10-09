@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>اضافه کردن کتگوری</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        input, button { padding: 10px; margin: 5px 0; }
+        ul { list-style: none; padding: 0; }
+        li { background: #f0f0f0; margin: 5px 0; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+<h2>اضافه کردن کتگوری جدید</h2>
+<form id="categoryForm">
+    <input type="text" id="categoryName" placeholder="نام کتگوری" required>
+    <button type="submit">اضافه کن</button>
+</form>
+
+<h3>لیست کتگوری‌ها</h3>
+<ul id="categoryList"></ul>
+
+<script>
+    const apiUrl = "http://localhost:8080/categories"; // آدرس سرور Spring Boot
+
+    async function fetchCategories() {
+        const res = await fetch(apiUrl);
+        const categories = await res.json();
+        const list = document.getElementById("categoryList");
+        list.innerHTML = "";
+        categories.forEach(cat => {
+            const li = document.createElement("li");
+            li.textContent = cat.name;
+            list.appendChild(li);
+        });
+    }
+
+    document.getElementById("categoryForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const name = document.getElementById("categoryName").value;
+
+        await fetch(apiUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name })
+        });
+
+        document.getElementById("categoryName").value = "";
+        fetchCategories();
+    });
+
+    // بارگذاری اولیه لیست کتگوری‌ها
+    fetchCategories();
+</script>
+</body>
+</html>

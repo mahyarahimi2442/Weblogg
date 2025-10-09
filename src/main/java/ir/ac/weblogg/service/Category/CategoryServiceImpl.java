@@ -5,7 +5,6 @@ import ir.ac.weblogg.dto.category.CategoryDto;
 import ir.ac.weblogg.dto.category.CategorySaveDto;
 import ir.ac.weblogg.model.Category;
 import ir.ac.weblogg.Repasitory.CategoryRepository;
-import ir.ac.weblogg.service.Category.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto findById(int id) {
+    public Category findById(int id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new RuleException("category.not.found"));
         return CategoryDto.convertToDto(category);

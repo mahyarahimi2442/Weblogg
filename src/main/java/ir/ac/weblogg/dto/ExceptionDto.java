@@ -1,4 +1,4 @@
-package ir.ac.weblogg.dto.post;
+package ir.ac.weblogg.dto;
 
 public class ExceptionDto {
     private final String title;

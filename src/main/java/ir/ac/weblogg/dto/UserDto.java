@@ -3,11 +3,12 @@ package ir.ac.weblogg.dto;
 import jakarta.validation.constraints.NotBlank;
 
 public class UserDto {
-    private final String username;
-    private final String password;
-    private final String fullName;
-    private final String email;
+    private  String username;
+    private  String password;
+    private  String fullName;
+    private  String email;
 
+public UserDto() {}
     public UserDto(String username, String password, String fullName, String email) {
         this.username = username;
         this.password = password;

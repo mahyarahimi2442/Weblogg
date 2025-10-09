@@ -149,12 +149,12 @@
             })
                 .then(async res => {
                     if (res.status !== 200) {
-                        showErrorToast(response[0].title)
+                        showErrorToast(text)
                         return;
                     }
                     window.location.href = "http://localhost:8080/login";
                 })
-1
+
         }
     )
 

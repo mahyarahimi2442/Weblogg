@@ -4,18 +4,16 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "application_users")
-public class User  {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class User extends BaseEntity {
+
     private String username;
     private String password;
     private String fullName;
     private String email;
+    @Enumerated(EnumType.STRING)
     private Role role;
 
 
-    @Enumerated(EnumType.STRING)
     public Role getRole() {
         return role;
     }

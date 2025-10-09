@@ -19,5 +19,9 @@ public class PageController {
 
     @GetMapping("/register")
     public String register() {return "register";}
+
+    @GetMapping("/category")
+    public String addCategory() {return "addCategory";}
+
 }
 
