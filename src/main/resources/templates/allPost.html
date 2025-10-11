@@ -14,45 +14,35 @@
         }
 
         header {
-            background: linear-gradient(90deg, #9953cd, #613383);
-            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 10;
+            border-radius: 0 0 20px 20px;
         }
 
-        .logo span:nth-child(odd) {
-            color: #ffcb05;
-            text-decoration: underline;
-        }
-
-        .logo span:nth-child(even) {
-            color: white;
-            text-decoration: underline;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
+        header .logo {
+            font-size: 32px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-weight: 700;
+            color: #f1b0e9;
         }
 
         nav a {
-            margin: 0 12px;
             text-decoration: none;
-            color: white;
+            margin: 0 15px;
+            color: #444;
             font-weight: 500;
-            font-size: 16px;
-            padding: 6px 10px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
 
         nav a:hover {
-            background: rgba(255, 255, 255, 0.2);
+            color: #00b2b2;
         }
 
         table {
@@ -72,7 +62,7 @@
         }
 
         th {
-            background: #5a4bcf;
+            background: #673453;
             color: white;
             font-weight: 600;
             text-transform: uppercase;
@@ -109,8 +99,13 @@
             transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
 
-        .b-d { background-color: #e74c3c; }
-        .b-u { background-color: #3498db; }
+        .b-d {
+            background-color: #e74c3c;
+        }
+
+        .b-u {
+            background-color: #3498db;
+        }
 
         td button:hover {
             transform: scale(1.05);
@@ -122,7 +117,7 @@
             margin-bottom: 30px;
             width: 100%;
             max-width: 1000px;
-            background: #764ba2;
+            background: #500d36;
             color: white;
             border-radius: 12px;
             border: none;
@@ -130,26 +125,23 @@
             font-size: 17px;
             font-weight: 700;
             letter-spacing: 0.07em;
-            box-shadow: 0 6px 16px rgb(118 75 162 / 0.7);
+            box-shadow: 0 6px 16px rgb(143, 44, 105);
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         button#add-post:hover {
-            background: #5a3c95;
+            background: #e181bb;
             transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
-
 <header>
-
+    <div class="logo">My Blog</div>
     <nav>
-        <a href="http://localhost:8080/">خانه</a>
-        <a href="http://localhost:8080/posts">پست‌ها</a>
-        <a href="http://localhost:8080/categories">دسته‌بندی‌ها</a>
-        <a href="http://localhost:8080/register">ثبت‌نام</a>
-        <a href="http://localhost:8080/login">ورود</a>
+        <a href="/">خانه</a>
+        <a href="/login">ورود به حساب</a>
+        <a href="/register">ثبت نام</a>
     </nav>
 </header>
 
@@ -165,9 +157,10 @@
             <th>Author</th>
             <th>Category</th>
             <th>Status</th>
-            <th>Views</th>
+            <th>Image</th>
             <th>Delete</th>
             <th>Update</th>
+
         </tr>
         </thead>
         <tbody></tbody>
@@ -180,11 +173,12 @@
         tbody.innerHTML = "";
         posts.forEach(p => {
             const tr = document.createElement("tr");
-            tr.innerHTML =`
+            tr.innerHTML = `
                 <td title="${p.title}">${p.title}</td>
             <td>${p.author}</td>
             <td>${p.categoryName}</td>
             <td>${p.status}</td>
+            <td>${p.image}</td>
             <td>
                 <button class="b-d" onclick="deletePost(${p.id}, this)">Delete</button>
             </td>
@@ -203,15 +197,15 @@
 
     function deletePost(id, btn) {
         if (!confirm("آیا مطمئنی می‌خوای پست رو حذف کنی؟")) return;
-        fetch(`http://localhost:8080/posts/${id}`, { method: "DELETE" })
-    .then(res => {
-            if (res.ok) {
-                alert("پست با موفقیت حذف شد ✅");
-                btn.closest("tr").remove();
-            } else {
-                alert("خطا در حذف پست ❌");
-            }
-        })
+        fetch(`http://localhost:8080/posts/${id}`, {method: "DELETE"})
+            .then(res => {
+                if (res.ok) {
+                    alert("پست با موفقیت حذف شد ✅");
+                    btn.closest("tr").remove();
+                } else {
+                    alert("خطا در حذف پست ❌");
+                }
+            })
             .catch(err => console.error("Error deleting post:", err));
     }
 </script>

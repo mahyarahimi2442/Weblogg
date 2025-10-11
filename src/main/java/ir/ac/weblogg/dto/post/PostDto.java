@@ -1,4 +1,5 @@
 package ir.ac.weblogg.dto.post;
+
 import ir.ac.weblogg.model.Post;
 import ir.ac.weblogg.model.PostStatus;
 
@@ -12,12 +13,13 @@ public class PostDto {
     private final String content;
     private final String author;
     private final PostStatus status;
+    private final String image;
     private final LocalDateTime publishedAt;
     private final String categoryName;
     private final int categoryId;
 
-    public PostDto(int id, String title, LocalDateTime creationDate, LocalDateTime updatedAt, String content, String author, PostStatus status
-                   , LocalDateTime publishedAt, String categoryName, int categoryId) {
+    public PostDto(int id, String title, LocalDateTime creationDate, LocalDateTime updatedAt, String content,
+                   String author, PostStatus status, String image, LocalDateTime publishedAt, String categoryName, int categoryId) {
         this.id = id;
         this.title = title;
         this.creationDate = creationDate;
@@ -25,6 +27,7 @@ public class PostDto {
         this.content = content;
         this.author = author;
         this.status = status;
+        this.image = image;
         this.publishedAt = publishedAt;
         this.categoryName = categoryName;
         this.categoryId = categoryId;
@@ -50,6 +53,10 @@ public class PostDto {
         return content;
     }
 
+    public String getImage() {
+        return image;
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -71,18 +78,19 @@ public class PostDto {
         return categoryId;
     }
 
-    public static PostDto convertToDto(Post post)
-    {return new PostDto(
-            post.getId(),
-            post.getTitle(),
-            post.getCreatedAt(),
-            post.getUpdatedAt(),
-            post.getContent(),
-            post.getAuthor(),
-            post.getStatus(),
-            post.getPublishedAt(),
-            post.getCategory().getName(),
-            post.getCategory().getId());
+    public static PostDto convertToDto(Post post) {
+        return new PostDto(
+                post.getId(),
+                post.getTitle(),
+                post.getCreatedAt(),
+                post.getUpdatedAt(),
+                post.getContent(),
+                post.getAuthor(),
+                post.getStatus(),
+                post.getImage(),
+                post.getPublishedAt(),
+                post.getCategory().getName(),
+                post.getCategory().getId());
 
     }
 }

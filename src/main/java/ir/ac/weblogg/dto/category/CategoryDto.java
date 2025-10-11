@@ -1,4 +1,5 @@
 package ir.ac.weblogg.dto.category;
+
 import ir.ac.weblogg.model.Category;
 
 public class CategoryDto {

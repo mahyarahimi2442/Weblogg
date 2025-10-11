@@ -1,6 +1,8 @@
 package ir.ac.weblogg.service.Post;
+
 import ir.ac.weblogg.Repasitory.PostRepository;
 import ir.ac.weblogg.customExeption.RuleException;
+import ir.ac.weblogg.dto.post.PostDto;
 import ir.ac.weblogg.model.Post;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +45,8 @@ public class PostServiceImpl implements PostService {
         post.setAuthor(updatePost.getAuthor());
         post.setStatus(updatePost.getStatus());
         post.setUpdatedAt(LocalDateTime.now());
-
+        post.setImage(updatePost.getImage());
+        post.setCategory(updatePost.getCategory());
         postRepository.save(post);
     }
 
@@ -53,5 +56,12 @@ public class PostServiceImpl implements PostService {
                 .orElseThrow(() -> new RuleException("post.not.found"));
         post.setDisableDate(LocalDateTime.now());
         postRepository.save(post);
+    }
+
+    @Override
+    public List<PostDto> findByCategoryId(int categoryId) {
+        return
+                postRepository.findByCategoryId(categoryId).stream()
+                        .map(PostDto::convertToDto).toList();
     }
 }

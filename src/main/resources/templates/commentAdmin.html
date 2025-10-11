@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>مدیریت کامنت‌ها</title>
+    <style>
+        body { font-family: sans-serif; direction: rtl; background: #fafafa; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+        button { padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; }
+        .approve { background-color: #4CAF50; color: white; }
+        .delete { background-color: #f44336; color: white; }
+    </style>
+</head>
+<body>
+<h1>💬 مدیریت کامنت‌ها</h1>
+<table id="comments-table">
+    <thead>
+    <tr>
+        <th>نویسنده</th>
+        <th>ایمیل</th>
+        <th>متن</th>
+        <th>تأیید شده؟</th>
+        <th>اقدام</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    fetch("http://localhost:8080/comments/allComments")
+        .then(res => res.json())
+        .then(comments => {
+            const tbody = document.querySelector("#comments-table tbody");
+            comments.forEach(c => {
+                const row = document.createElement("tr");
+                row.innerHTML =`
+                    <td>${c.authorName}</td>
+                <td>${c.authorEmail}</td>
+                <td>${c.content}</td>
+                <td>${c.approved ? "✅" : "❌"}</td>
+                <td>
+                    <button class="approve" onclick="approve(${c.id})">تأیید</button>
+                    <button class="delete" onclick="removeComment(${c.id})">حذف</button>
+                </td>
+                `;
+                tbody.appendChild(row);
+            });
+        });
+
+    function approve(id) {
+        fetch(`http://localhost:8080/comments/admin/comments/${id}/approve`, { method: "PUT" })
+    .then(() => location.reload());
+    }
+
+    function removeComment(id) {
+        fetch(`http://localhost:8080/comments/admin/comments/${id}`, { method: "DELETE" })
+    .then(() => location.reload());
+    }
+</script>
+</body>
+</html>

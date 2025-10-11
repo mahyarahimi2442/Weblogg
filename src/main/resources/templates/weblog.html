@@ -9,33 +9,36 @@
         body {
             margin: 0;
             font-family: "Vazirmatn", sans-serif;
-            background-color: #f9fbfc;
+            background: linear-gradient(135deg, #7bdab1, #ceacf1);
+            background-size: cover;
             color: #333;
         }
 
-        /* Header */
         header {
-            background-color: white;
-            padding: 15px 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 10;
+            border-radius: 0 0 20px 20px;
         }
 
         header .logo {
-            font-size: 22px;
+            font-size: 32px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
             font-weight: 700;
-            color: #008c99;
+            color: #8a5784;
         }
 
         nav a {
             text-decoration: none;
             margin: 0 15px;
             color: #444;
+            font-weight: 500;
             transition: 0.3s;
         }
 
@@ -45,7 +48,6 @@
 
         /* Search section */
         .search-section {
-            background: linear-gradient(135deg, #a4f5e9, #b3e5fc);
             text-align: center;
             padding: 50px 20px;
         }
@@ -53,7 +55,7 @@
         .search-section h1 {
             font-size: 26px;
             margin-bottom: 15px;
-            color: #005f68;
+            color: #500d36;
         }
 
         .search-box {
@@ -73,8 +75,8 @@
         }
 
         .search-box button {
-            background-color: #00bfa6;
-            color: white;
+            background-color: #50b597;
+            color: wheat;
             border: none;
             border-radius: 8px;
             padding: 10px 20px;
@@ -84,7 +86,7 @@
         }
 
         .search-box button:hover {
-            background-color: #009c89;
+            background-color: #50b597;
         }
 
         /* Category buttons */
@@ -113,7 +115,7 @@
             color: white;
         }
 
-        /* Blog grid */
+
         .blog-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -123,17 +125,6 @@
             padding: 0 20px;
         }
 
-        .blog-card {
-            background-color: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            transition: 0.3s;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-5px);
-        }
 
         .blog-card img {
             width: 100%;
@@ -147,7 +138,7 @@
 
         .blog-card h3 {
             margin: 10px 0;
-            color: #007a84;
+            color: #500d36;
             font-size: 18px;
         }
 
@@ -156,11 +147,12 @@
             color: #666;
             line-height: 1.6;
         }
-        /* جزئیات دکمه */
+
+
         .details-btn {
             display: inline-block;
-            background-color: #00bfa6;
-            color: white;
+            background-color: #884d82;
+            color: rgba(255, 255, 255, 0.55);
             border: none;
             padding: 8px 16px;
             border-radius: 8px;
@@ -171,10 +163,10 @@
         }
 
         .details-btn:hover {
-            background-color: #009c89;
+            background-color: #c5348b;
         }
 
-        /* Featured (big) card */
+
         .featured {
             grid-column: 1 / -1;
         }
@@ -183,14 +175,70 @@
             height: 350px;
         }
 
-        /* Footer */
-        footer {
-            background-color: #e0f7f3;
+
+        .modern-footer {
+            margin-top: 80px;
+            background: linear-gradient(135deg, rgba(157, 224, 237, 0.8), rgba(239, 229, 233, 0.8));
+            backdrop-filter: blur(10px);
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+            color: #333;
             text-align: center;
-            padding: 20px;
+            border-radius: 30px 30px 0 0;
+            box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 40px 20px 20px;
+            gap: 30px;
+        }
+
+        .footer-logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #8a5784;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        }
+
+        .footer-links a {
+            margin: 0 10px;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #007a84;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-socials .social {
+            margin: 0 8px;
+            font-size: 22px;
+            color: #007a84;
+            transition: all 0.3s ease;
+        }
+
+        .footer-socials .social:hover {
+            transform: translateY(-3px) scale(1.1);
+            color: #ff6ec7;
+            text-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-bottom {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 15px 0;
             font-size: 14px;
-            color: #006d73;
-            margin-top: 40px;
+            color: #333;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-bottom strong {
+            color: #007a84;
         }
 
         /* Responsive */
@@ -208,57 +256,190 @@
             header {
                 flex-direction: column;
             }
+
             nav {
                 margin-top: 10px;
             }
+        }
+
+        .categories button {
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .categories button:hover {
+            transform: translateY(-3px);
+            opacity: 0.9;
+        }
+
+        .blog-card {
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .details-btn {
+            display: inline-block;
+            background-color: #00bfa6;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            margin-top: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .details-btn:hover {
+            background-color: #009c89;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">MyBlog 🌿</div>
+    <div class="logo">My Blog</div>
     <nav>
-        <a href="#">خانه</a>
-        <a href="#">پست‌ها</a>
-        <a href="#">درباره ما</a>
-        <a href="#">تماس</a>
+        <a href="/">خانه</a>
+        <a href="/login">ورود به حساب</a>
+        <a href="/register">ثبت نام</a>
     </nav>
 </header>
 
 <section class="search-section">
-    <h1>وبلاگ سرگرم‌کننده ما 🌸</h1>
+    <h1>وبلاگ سرگرم‌کننده ما🌸</h1>
     <div class="search-box">
         <input type="text" placeholder="جستجو در پست‌ها...">
         <button>جستجو</button>
     </div>
 </section>
+<div class="categories" id="categories">
 
-<div class="categories">
-    <button>ورزشی</button>
-    <button>علمی</button>
-    <button>فناوری</button>
-    <button>زندگی</button>
-    <button>مسافرت</button>
-    <button>سلامت</button>
-    <button>موزیک</button>
-    <button>سینما</button>
 </div>
 
 <main class="blog-grid" id="posts-container">
-    <!-- پست‌ها به صورت داینامیک اینجا اضافه می‌شن -->
+
 </main>
 
-<footer>
-    © 2025 - طراحی شده با 💚 توسط محیا
+<footer class="modern-footer">
+    <div class="footer-content">
+        <div class="footer-logo">🌸 My Blog</div>
+
+        <div class="footer-links">
+            <a href="#">درباره ما</a>
+            <a href="#">تماس با ما</a>
+            <a href="#">قوانین و حریم خصوصی</a>
+        </div>
+
+        <div class="footer-socials">
+            <a href="#" class="social"><i class="fab fa-telegram"></i></a>
+            <a href="#" class="social"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social"><i class="fab fa-github"></i></a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>وبلاگ <strong>محیا</strong> — © 2025</p>
+    </div>
 </footer>
 
 <script>
+    const apiBase = "http://localhost:8080";
+
+    fetch(`${apiBase}/categories`)
+        .then(res => res.json())
+        .then(categories => {
+            const container = document.getElementById("categories");
+            // دکمه همه پست‌ها
+            const allBtn = document.createElement("button");
+            allBtn.textContent = "همه";
+            allBtn.style.backgroundColor = "#00bfa6";
+            allBtn.style.color = "white";
+            allBtn.onclick = () => loadPosts();
+            container.appendChild(allBtn);
+
+            categories.forEach(cat => {
+                const btn = document.createElement("button");
+                btn.textContent = cat.name;
+                btn.style.backgroundColor = randomColor(cat.id);
+                btn.style.color = "white";
+                btn.onclick = () => loadPostsByCategory(cat.id);
+                container.appendChild(btn);
+            });
+        });
+
+    // گرفتن پست‌ها
+    function loadPosts() {
+        fetch(`${apiBase}/posts`)
+            .then(res => res.json())
+            .then(posts => renderPosts(posts));
+    }
+
+    function loadPostsByCategory(categoryId) {
+        fetch(`${apiBase}/posts/category/${categoryId}`)
+            .then(res => res.json())
+            .then(posts => renderPostsByCategory(posts));
+    }
+
+    // رندر کارت‌های پست
+    function renderPostsByCategory(posts) {
+        const container = document.getElementById("posts-container");
+        container.innerHTML = "";
+
+        if (!posts.length) {
+            container.innerHTML = "<p style='text-align:center'>هیچ پستی وجود ندارد ❌</p>";
+            return;
+        }
+
+        posts.forEach(post => {
+            const card = document.createElement("div");
+            card.className = "blog-card";
+
+            card.innerHTML = `
+        <img src="${post.image || 'default.jpg'}" alt="${post.title}">
+        <div class="content">
+        <h3>${post.title}</h3>
+    <p>${post.content.substring(0, 120)}...</p>
+    <a href="postDetails?id=${post.id}" class="details-btn">مشاهده جزئیات</a>
+    </div>`
+            ;
+            container.appendChild(card);
+        });
+    }
+
+    // رنگ تصادفی یا بر اساس id برای دکمه‌ها
+    function randomColor(id) {
+        const colors = ["#f94144", "#f3722c", "#f8961e", "#90be6d", "#43aa8b", "#577590", "#277da1", "#7209b7"];
+        return colors[id % colors.length];
+    }
+
+    // بارگذاری اولیه همه پست‌ها
+    loadPosts();
+
     // دریافت پست‌ها از بک‌اند
     fetch("http://localhost:8080/posts")
         .then(res => res.json())
         .then(posts => renderPosts(posts))
-        ;
+    ;
 
     function renderPosts(posts) {
         const container = document.getElementById("posts-container");
@@ -269,18 +450,21 @@
             card.className = "blog-card";
 
             card.innerHTML =
-               `
+                `
                     <div class="content">
+                        <img src="${post.image}" alt="${post.title}">
                         <h3>${post.title}</h3>
-                        <p>${post.content }...</p>
+                        <p>${post.content}...</p>
+
                         <a href="http://localhost:8080/postDetails?id=${post.id}" class="details-btn">مشاهده جزئیات</a>
                     </div>`
-                    ;
+            ;
 
-                    container.appendChild(card);
-                    });
-                    }
+            container.appendChild(card);
+        });
+    }
 </script>
+<script src="https://kit.fontawesome.com/a2d9d5f3c7.js" crossorigin="anonymous"></script>
 
 </body>
 </html>

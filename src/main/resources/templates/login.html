@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,124 +10,124 @@
 
     <style>
         body {
-            background: linear-gradient(135deg, #7bdab1, #ceacf1);
-            direction: rtl;
-        }
-        header {
-            background: linear-gradient(90deg, #9953cd, #613383);
-            padding: 15px 30px;
+            height: 100vh;
+            margin: 0;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            background: linear-gradient(135deg, #7bdab1, #ceacf1, #6fa8dc);
+            font-family: 'Vazirmatn', sans-serif;
         }
-        .logo span:nth-child(odd) {
-            color: #ffcb05;
-            text-decoration: underline;
-            text-decoration-color: #ffcb05;
-        }
-
-        .logo span:nth-child(even) {
-            color: white;
-            text-decoration: underline;
-            text-decoration-color: white;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        nav a {
-            margin: 0 12px;
-            text-decoration: none;
-            color: white;
-            font-weight: 500;
-            font-size: 16px;
-            padding: 6px 10px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        nav a:hover {
-            background: rgba(255,255,255,0.2);
-        }
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            nav {
-                margin-top: 10px;}}
 
 
         .login-card {
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
-            background-color: white;
-            height: 400px;
-
+            background: rgba(255,255,255,0.95);
+            border-radius: 25px;
+            padding: 50px 30px;
+            width: 360px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow: hidden;
         }
 
-        .btn-primary {
-            background-color: #1976d2;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background-color: #1565c0;
+        .login-card h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #613383;
+            font-weight: bold;
         }
 
         .form-label {
-            margin-bottom: 10px;
             font-weight: 500;
+            margin-bottom: 8px;
+            color: #333;
         }
 
         .form-control {
+            padding: 12px 15px;
+            border-radius: 15px;
+            border: 1px solid #ccc;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .form-control.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #ff6ec7, #6c5dd3);
+            border: none;
+            font-weight: 600;
+            border-radius: 15px;
             padding: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #6c5dd3, #ff6ec7);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .fade-in-delay {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        .fade-delay-1 { animation-delay: 0.2s; }
+        .fade-delay-2 { animation-delay: 0.4s; }
+        .fade-delay-3 { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
 
-
-<div class="container">
-    <div class="toast-container position-fixed top-0 end-0 p-3">
-        <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive"
-             aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body" id="toastMessage">
-                    خطا رخ داده است
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
+<div class="toast-container position-fixed top-0 end-0 p-3">
+    <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive"
+         aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body" id="toastMessage">
+                خطا رخ داده است
             </div>
-        </div>
-    </div>
-
-    <div class="login-card d-flex flex-column justify-content-center">
-        <h2 class="text-center text-primary mb-4">ورود به حساب</h2>
-        <div>
-            <div class="mb-4">
-                <label for="username" class="form-label">نام کاربری</label>
-                <input type="text" class="form-control" id="username" placeholder="نام کاربری خود را وارد کنید">
-            </div>
-            <div class="mb-4">
-                <label for="password" class="form-label">رمز عبور</label>
-                <input type="password" class="form-control" id="password" placeholder="رمز عبور خود را وارد کنید">
-            </div>
-            <button onclick="login();" class="btn btn-primary w-100 fs-5 py-2">ورود</button>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                    aria-label="Close"></button>
         </div>
     </div>
 </div>
+
+<div class="login-card">
+    <h2>ورود به حساب</h2>
+    <div class="mb-3 fade-in-delay fade-delay-1">
+        <label for="username" class="form-label">نام کاربری</label>
+        <input type="text" class="form-control" id="username" placeholder="نام کاربری خود را وارد کنید">
+    </div>
+    <div class="mb-3 fade-in-delay fade-delay-2">
+        <label for="password" class="form-label">رمز عبور</label>
+        <input type="password" class="form-control" id="password" placeholder="رمز عبور خود را وارد کنید">
+    </div>
+    <div class="fade-in-delay fade-delay-3">
+        <button onclick="login();" class="btn btn-primary w-100 fs-5">ورود</button>
+    </div>
+</div>
+
+<script>
+
+    window.addEventListener('load', () => {
+        document.querySelectorAll('.form-control').forEach((el, idx) => {
+            setTimeout(() => el.classList.add('show'), idx * 200);
+        });
+    });
+
+</script>
 
 <script>
     function login() {

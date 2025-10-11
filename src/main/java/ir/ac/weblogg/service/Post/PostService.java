@@ -1,5 +1,6 @@
 package ir.ac.weblogg.service.Post;
 
+import ir.ac.weblogg.dto.post.PostDto;
 import ir.ac.weblogg.model.Post;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public interface PostService {
     Post findById(int id);
 
     void delete(int id);
+    List<PostDto> findByCategoryId(int categoryId);
 
     void update(int id, Post updatePost);
 

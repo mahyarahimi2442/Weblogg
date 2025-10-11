@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>مدیریت کامنت‌ها</title>
+    <style>
+        body { font-family: sans-serif; direction: rtl; background: #fafafa; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; text-align: center; }
+        button { padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+<h1> مدیریت یوزر‌ها</h1>
+<table id="comments-table">
+    <thead>
+    <tr>
+        <th>یوزرنیم</th>
+        <th>رمز</th>
+        <th>نام و نام خانوادگی</th>
+        <th>ایمیل</th>
+
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+    fetch("http://localhost:8080/users")
+        .then(res => res.json())
+        .then(comments => {
+            const tbody = document.querySelector("#comments-table tbody");
+            comments.forEach(c => {
+                const row = document.createElement("tr");
+                row.innerHTML =`
+                    <td>${c.username}</td>
+                <td>${c.password}</td>
+                <td>${c.fullName}</td>
+                 <td>${c.email}</td>
+
+
+
+                `;
+                tbody.appendChild(row);
+            });
+        });
+
+</script>
+</body>
+</html>

@@ -15,10 +15,18 @@ public class Post extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PostStatus status;
     private LocalDateTime publishedAt;
+    private String image;
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public Category getCategory() {
         return category;

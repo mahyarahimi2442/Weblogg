@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جزئیات پست</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: "Vazirmatn", sans-serif;
+            background: linear-gradient(135deg, #7bdab1, #ceacf1);
+            background-size: cover;
+            color: #333;
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-radius: 0 0 20px 20px;
+        }
+
+        header .logo {
+            font-size: 32px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-weight: 700;
+            color: #f1b0e9;
+        }
+
+        nav a {
+            text-decoration: none;
+            margin: 0 15px;
+            color: #444;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #00b2b2;
+        }
+
+        .post-container {
+            max-width: 900px;
+            margin: 60px auto;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 35px;
+            backdrop-filter: blur(5px);
+        }
+
+        .post-container img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .post-container img:hover {
+            transform: scale(1.03);
+        }
+
+        .post-title {
+            font-size: 32px;
+            color: #007a84;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .post-meta {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .post-content {
+            line-height: 1.9;
+            font-size: 16px;
+            color: #444;
+        }
+
+        .category-badge {
+            display: inline-block;
+            background-color: #00bfa6;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 13px;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        footer {
+            background-color: rgba(186, 159, 159, 0.9);
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #006d73;
+            margin-top: 40px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #6c5dd3, #ff6ec7);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(90deg, #ff6ec7, #6c5dd3);
+        }
+
+        #comment-form-container input,
+        #comment-form-container textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        #comment-form-container button {
+            background: #00bfa6;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #comment-form-container button:hover {
+            background: #008c99;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        #comments-container ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #comments-container li {
+            background-color: rgba(0, 0, 0, 0.03);
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">My Blog</div>
+    <nav>
+        <a href="/">خانه</a>
+        <a href="/login">ورود به حساب</a>
+        <a href="/register">ثبت نام</a>
+    </nav>
+</header>
+
+<main>
+
+
+    <div class="post-container" id="post-details">
+        <p>در حال بارگذاری...</p>
+    </div>
+</main>
+
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const postId = params.get("id");
+
+    if (!postId) {
+        document.getElementById("post-details").innerHTML = "<p>پستی یافت نشد ❌</p>";
+    } else {
+        // دریافت پست
+        fetch(`http://localhost:8080/posts/${postId}`)
+            .then(res => res.json())
+            .then(post => renderPost(post))
+            .catch(() => {
+                document.getElementById("post-details").innerHTML = "<p>خطا در دریافت اطلاعات پست ❌</p>";
+            });
+
+        // دریافت کامنت‌های تایید شده برای پست
+        fetch(`http://localhost:8080/comments/posts/${postId}`)
+            .then(res => res.json())
+            .then(comments => renderComments(comments))
+            .catch(() => {
+                document.getElementById("comments-list").innerHTML = "<li>خطا در دریافت نظرات</li>";
+            });
+    }
+
+    function renderPost(post) {
+        const container = document.getElementById("post-details");
+        const imageSrc = post.image && post.image.trim() !== "" ? post.image : "default.jpg";
+
+        container.innerHTML = `
+            <img src="${imageSrc}" alt="${post.title}">
+                <h1 class="post-title">${post.title}</h1>
+                <div class="post-meta">
+                    ✍️ نویسنده: ${post.author || "ناشناس"} |
+                    🕓 تاریخ: ${new Date(post.creationDate).toLocaleDateString("fa-IR")} |
+                    👁 بازدید: ${post.views || 0}
+                </div>
+                <div class="post-content">${post.content || ""}</div>
+                <div class="category-badge">${post.categoryName || "بدون دسته‌بندی"}</div>
+                <br>
+                    <a class="back-btn" href="http://localhost:8080/">بازگشت</a>
+
+                    <!-- فرم ثبت کامنت -->
+                    <div id="comment-form-container">
+                        <h2>ثبت نظر شما</h2>
+                        <form id="comment-form">
+                            <input type="text" id="authorName" placeholder="نام شما" required>
+                                <input type="email" id="authorEmail" placeholder="ایمیل شما" required>
+                                    <textarea id="content" placeholder="نظر خود را بنویسید..." required></textarea>
+                                    <button type="submit">ارسال نظر</button>
+                        </form>
+                    </div>
+
+                    <!-- لیست کامنت‌ها -->
+                    <div id="comments-container">
+                        <h2>نظرات</h2>
+                        <ul id="comments-list"></ul>
+                    </div>`
+        ;
+
+
+        const form = document.getElementById("comment-form");
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const data = {
+                authorName: document.getElementById("authorName").value,
+                authorEmail: document.getElementById("authorEmail").value,
+                content: document.getElementById("content").value,
+                postId: parseInt(postId)
+            };
+
+            fetch("http://localhost:8080/comments", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then(() => {
+                    alert("نظر شما ثبت شد و پس از تایید نمایش داده می‌شود ✅");
+                    form.reset();
+                })
+                .catch(() => alert("خطا در ثبت نظر ❌"));
+        });
+    }
+
+    function renderComments(comments) {
+        const list = document.getElementById("comments-list");
+        list.innerHTML = "";
+        if (!comments || comments.length === 0) {
+            list.innerHTML = "<li>هیچ نظری ثبت نشده است.</li>";
+            return;
+        }
+        comments.forEach(c => {
+            const li = document.createElement("li");
+            li.innerHTML = `
+                <strong>${c.authorName}</strong> (${c.authorEmail}) گفت:
+                <p>${c.content}</p>`
+            ;
+            list.appendChild(li);
+        });
+    }
+
+    function showErrorToast(message) {
+        document.getElementById("toastMessage").textContent = message;
+        const toastElement = document.getElementById("errorToast");
+        const toast = new bootstrap.Toast(toastElement);
+        toast.show();
+    }
+</script>
+
+</body>
+</html>

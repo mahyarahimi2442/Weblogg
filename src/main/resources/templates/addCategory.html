@@ -1,27 +1,198 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <title>اضافه کردن کتگوری</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        input, button { padding: 10px; margin: 5px 0; }
-        ul { list-style: none; padding: 0; }
-        li { background: #f0f0f0; margin: 5px 0; padding: 10px; border-radius: 5px; }
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #f9f1ff, #e3f8ff);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 20px 20px;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #8a2be2;
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #8a2be2;
+        }
+
+        main {
+            margin-top: 60px;
+            background: #fff;
+            padding: 40px 50px;
+            border-radius: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        h2 {
+            color: #8a2be2;
+            margin-bottom: 25px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0d4ff;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #8a2be2;
+            box-shadow: 0 0 6px rgba(138, 43, 226, 0.4);
+        }
+
+        button {
+            background: linear-gradient(45deg, #8a2be2, #00c3ff);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.3);
+        }
+
+        h3 {
+            margin-top: 35px;
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        li {
+            background: linear-gradient(90deg, #f4eeff, #e9f7ff);
+            margin: 8px 0;
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-weight: 500;
+            color: #444;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c4a9ff;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
-<h2>اضافه کردن کتگوری جدید</h2>
-<form id="categoryForm">
-    <input type="text" id="categoryName" placeholder="نام کتگوری" required>
-    <button type="submit">اضافه کن</button>
-</form>
+<header>
+    <div class="logo">🌸 WebLog Admin</div>
+    <nav>
+        <a href="/">خانه</a>
+        <a href="/login">ورود به حساب</a>
+        <a href="/register">ساخت حساب</a>
+    </nav>
+</header>
 
-<h3>لیست کتگوری‌ها</h3>
-<ul id="categoryList"></ul>
+<main>
+    <h2>اضافه کردن کتگوری جدید</h2>
+    <form id="categoryForm">
+        <input type="text" id="categoryName" placeholder="نام کتگوری را وارد کنید..." required>
+        <button type="submit">اضافه کن</button>
+    </form>
+
+    <h3>لیست کتگوری‌ها</h3>
+    <ul id="categoryList"></ul>
+</main>
+
 
 <script>
-    const apiUrl = "http://localhost:8080/categories"; // آدرس سرور Spring Boot
+    const apiUrl = "http://localhost:8080/categories";
 
     async function fetchCategories() {
         const res = await fetch(apiUrl);
@@ -37,19 +208,19 @@
 
     document.getElementById("categoryForm").addEventListener("submit", async (e) => {
         e.preventDefault();
-        const name = document.getElementById("categoryName").value;
+        const name = document.getElementById("categoryName").value.trim();
+        if (!name) return;
 
         await fetch(apiUrl, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name })
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({name})
         });
 
         document.getElementById("categoryName").value = "";
         fetchCategories();
     });
 
-    // بارگذاری اولیه لیست کتگوری‌ها
     fetchCategories();
 </script>
 </body>

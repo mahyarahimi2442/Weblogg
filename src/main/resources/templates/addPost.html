@@ -15,48 +15,35 @@
         }
 
         header {
-            background: linear-gradient(90deg, #9953cd, #613383);
-            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 10;
+            border-radius: 0 0 20px 20px;
         }
 
-        .logo span:nth-child(odd) {
-            color: #ffcb05;
-            text-decoration: underline;
-            text-decoration-color: #ffcb05;
-        }
-
-        .logo span:nth-child(even) {
-            color: white;
-            text-decoration: underline;
-            text-decoration-color: white;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            letter-spacing: 1px;
+        header .logo {
+            font-size: 32px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-weight: 700;
+            color: #f1b0e9;
         }
 
         nav a {
-            margin: 0 12px;
             text-decoration: none;
-            color: white;
+            margin: 0 15px;
+            color: #444;
             font-weight: 500;
-            font-size: 16px;
-            padding: 6px 10px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
 
         nav a:hover {
-            background: rgba(255, 255, 255, 0.2);
+            color: #00b2b2;
         }
 
         @media (max-width: 768px) {
@@ -132,6 +119,10 @@
                 <label for="author" class="form-label">نویسنده</label>
                 <input type="text" class="form-control" id="author" placeholder="نام نویسنده را وارد کنید...">
             </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">تصویر</label>
+                <input type="text" class="form-control" id="image">
+            </div>
 
             <div class="mb-3">
                 <label class="form-label">وضعیت</label>
@@ -146,104 +137,106 @@
                 <select class="form-select" id="category"></select>
             </div>
 
-            <button type="submit" id="saveBtn"  class="btn btn-primary w-100 fw-bold">ذخیره</button>
+            <button type="submit" id="saveBtn" class="btn btn-primary w-100 fw-bold">ذخیره</button>
         </form>
 
-            <script>
-                const params = new URLSearchParams(window.location.search);
-                const postId = params.get("id");
+        <script>
+            const params = new URLSearchParams(window.location.search);
+            const postId = params.get("id");
 
-                document.addEventListener("DOMContentLoaded", () => {
-                    // گرفتن کتگوری‌ها از دیتابیس
-                    fetch("http://localhost:8080/categories")
-                        .then(res => res.json())
-                        .then(categories => {
-                            const categorySelect = document.getElementById("category");
-                            categories.forEach(cat => {
-                                const option = document.createElement("option");
-                                option.value = cat.id;
-                                option.textContent = cat.name;
-                                categorySelect.appendChild(option);
-                            });
-                        });
-
-                    // اگر حالت ویرایش بود:
-                    if (postId) {
-                        document.getElementById("saveBtn").innerText = "بروزرسانی پست";
-
-                        fetch(`http://localhost:8080/posts/${postId}`)
+            document.addEventListener("DOMContentLoaded", () => {
+                fetch("http://localhost:8080/categories")
                     .then(res => res.json())
-                            .then(post => {
-                                document.getElementById("title").value = post.title;
-                                document.getElementById("content").value = post.content;
-                                document.getElementById("author").value = post.author;
-                                document.getElementById("status").value = post.status;
-                                document.getElementById("category").value = post.categoryId;
-                            });
-                    }
-                });
+                    .then(categories => {
+                        const categorySelect = document.getElementById("category");
+                        categories.forEach(cat => {
+                            const option = document.createElement("option");
+                            option.value = cat.id;
+                            option.textContent = cat.name;
+                            categorySelect.appendChild(option);
+                        });
+                    });
 
-                document.getElementById("saveBtn").addEventListener("click", function (e) {
-                    e.preventDefault();
-                    if (postId) {
-                        updatePost(postId);
-                    } else {
-                        savePost();
-                    }
-                });
 
-                function savePost() {
-                    const title = document.getElementById("title").value;
-                    const content = document.getElementById("content").value;
-                    const author = document.getElementById("author").value;
-                    const status = document.getElementById("status").value;
-                    const categoryId = document.getElementById("category").value;
+                if (postId) {
+                    document.getElementById("saveBtn").innerText = "بروزرسانی پست";
 
-                    fetch("http://localhost:8080/posts", {
-                        method: "POST",
-                        headers: {"Content-type": "application/json"},
-                        body: JSON.stringify({title, content, author, status, categoryId})
-                    })
-                        .then(async res => {
-                            if (!res.ok) {
-                                const response = await res.json();
-                                alert(response[0]?.title || "خطا در ثبت پست");
-                                return;
-                            }
-                            return res.json();
-                        })
-                        .then(res => {
-                            if (res) {
-                                window.location.href = "http://localhost:8080/allpost";
-                            }
+                    fetch(`http://localhost:8080/posts/${postId}`)
+                        .then(res => res.json())
+                        .then(post => {
+                            document.getElementById("title").value = post.title;
+                            document.getElementById("content").value = post.content;
+                            document.getElementById("author").value = post.author;
+                            document.getElementById("status").value = post.status;
+                            document.getElementById("category").value = post.categoryId;
+                            document.getElementById("image").value = post.image;
                         });
                 }
+            });
 
-                function updatePost(id) {
-                    const title = document.getElementById("title").value;
-                    const content = document.getElementById("content").value;
-                    const author = document.getElementById("author").value;
-                    const status = document.getElementById("status").value;
-                    const categoryId = document.getElementById("category").value;
-                    fetch(`http://localhost:8080/posts/${id}`, {
-                    method: "PUT",
-                        headers: {"Content-type": "application/json"},
-                    body: JSON.stringify({title, content, author, status, categoryId})
+            document.getElementById("saveBtn").addEventListener("click", function (e) {
+                e.preventDefault();
+                if (postId) {
+                    updatePost(postId);
+                } else {
+                    savePost();
+                }
+            });
+
+            function savePost() {
+                const title = document.getElementById("title").value;
+                const content = document.getElementById("content").value;
+                const author = document.getElementById("author").value;
+                const status = document.getElementById("status").value;
+                const categoryId = document.getElementById("category").value;
+                const image = document.getElementById("image").value;
+
+                fetch("http://localhost:8080/posts", {
+                    method: "POST",
+                    headers: {"Content-type": "application/json"},
+                    body: JSON.stringify({title, content, author, status, categoryId, image})
                 })
-                .then(async res => {
-                    if (!res.ok) {
-                        const response = await res.json();
-                        alert(response[0]?.title || "خطا در بروزرسانی پست");
-                        return;
-                    }
-                    return res.json();
-                })
+                    .then(async res => {
+                        if (!res.ok) {
+                            const response = await res.json();
+                            alert(response[0]?.title || "خطا در ثبت پست");
+                            return;
+                        }
+                        return res.json();
+                    })
                     .then(res => {
                         if (res) {
-                            window.location.href = "http://localhost:8080/";
+                            window.location.href = "http://localhost:8080/allpost";
                         }
                     });
-                }
-            </script>
-  </body>
+            }
+
+            function updatePost(id) {
+                const title = document.getElementById("title").value;
+                const content = document.getElementById("content").value;
+                const author = document.getElementById("author").value;
+                const status = document.getElementById("status").value;
+                const categoryId = document.getElementById("category").value;
+                const image = document.getElementById("image").value;
+                fetch(`http://localhost:8080/posts/${id}`, {
+                    method: "PUT",
+                    headers: {"Content-type": "application/json"},
+                    body: JSON.stringify({title, content, author, status, categoryId, image})
+                })
+                    .then(async res => {
+                        if (!res.ok) {
+                            const response = await res.json();
+                            alert(response[0]?.title || "خطا در بروزرسانی پست");
+                            return;
+                        }
+                        return res.json();
+                    })
+                    .then(res => {
+                        if (res) {
+                            window.location.href = "http://localhost:8080/allpost";
+                        }
+                    });
+            }
+        </script>
+</body>
 </html>

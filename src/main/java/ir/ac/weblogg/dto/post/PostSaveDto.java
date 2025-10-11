@@ -1,4 +1,5 @@
 package ir.ac.weblogg.dto.post;
+
 import ir.ac.weblogg.model.Category;
 import ir.ac.weblogg.model.Post;
 import ir.ac.weblogg.model.PostStatus;
@@ -12,13 +13,16 @@ public class PostSaveDto {
     private final String author;
     private final PostStatus status;
     private final Integer categoryId;
+    private final String image;
 
-    public PostSaveDto(String title, String content, String author, PostStatus status, Integer categoryId) {
+    public PostSaveDto(String title, String content, String author, PostStatus status, Integer categoryId, String image) {
         this.title = title;
         this.content = content;
         this.author = author;
         this.status = status;
         this.categoryId = categoryId;
+        this.image = image;
+
     }
 
     @NotBlank(message = "post.save.dto.title.blank")
@@ -46,6 +50,10 @@ public class PostSaveDto {
         return categoryId;
     }
 
+    @NotNull(message = "post.save.dto.image.null")
+    public String getImage() {
+        return image;
+    }
 
     public Post convertToPost(Category category) {
         Post post = new Post();
@@ -54,6 +62,7 @@ public class PostSaveDto {
         post.setAuthor(author);
         post.setStatus(status);
         post.setCategory(category);
+        post.setImage(image);
         return post;
     }
 }
